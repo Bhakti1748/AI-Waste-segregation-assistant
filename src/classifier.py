@@ -7,6 +7,8 @@ import streamlit as st
 
 load_dotenv()
 
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
 class WasteAnalysisResult(BaseModel):
     item_name: str = Field(description="Name of detected waste item")
     category: str = Field(description="One of: Wet, Recyclable, E-waste, Hazardous, General")
@@ -43,7 +45,7 @@ def classify_waste(image: Image.Image) -> WasteAnalysisResult:
 
     # 2. Uses the updated gemini-3.6-flash model
     response = client.models.generate_content(
-        model="gemini-3.6-flash",
+        model="gemini-3.8-flash",
         contents=[image, prompt],
         config={
             "response_mime_type": "application/json",
